@@ -1,4 +1,4 @@
-from aulas.conta import Conta
+from aulas.conta import Conta, ContaCorrente, ContaPoupanca
 
 if __name__ == '__main__':
     conta1 = Conta(199249, 'ELIEZER ALVES', 250, 5000.00)
@@ -35,3 +35,34 @@ if __name__ == '__main__':
 
     # acessando os métodos estáticos da classe
     print("Código do banco: {}".format(Conta.codigBanco()))
+
+    print("________________________________________________________")
+
+    #Herança
+    contaCorrente = ContaCorrente(213121, "Eliezer Alves", 500.00, 1000.00)
+    print(contaCorrente.getTitular())
+    print(contaCorrente.getTaxaOperacao())
+    contaCorrente.imprimirSaldo()
+    contaCorrente.debitarTaxaOperacao(20.5)
+    contaCorrente.imprimirSaldo()
+
+    print("________________________________________________________")
+
+    contaPoupanca = ContaPoupanca(213121, "Eliezer Alves", 1000.00, 10000.00)
+    print(contaPoupanca.getTitular())
+    print(contaPoupanca.getTaxaRendimento())
+    contaPoupanca.imprimirSaldo()
+    contaPoupanca.creditarRendimento()
+    contaPoupanca.imprimirSaldo()
+
+    print("________________________________________________________")
+
+    # contaCorrente.imprimir()
+    # contaPoupanca.imprimir()
+
+    #Polimorfismo
+
+    contas = [contaCorrente,contaPoupanca]
+
+    for c in contas:
+        c.imprimir()

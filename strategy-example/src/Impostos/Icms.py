@@ -1,4 +1,4 @@
-from atividade1.src.Impostos.Contracts.IImposto import IImposto
+from .Contracts.IImposto import IImposto
 
 class Icms(IImposto):
 
