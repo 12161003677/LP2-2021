@@ -1,4 +1,4 @@
-from aulas.conta import Conta, ContaCorrente, ContaPoupanca
+from aulas.conta import Conta, ContaCorrente, ContaPoupanca, ContaPoupancaEspecial, ListaContas
 
 if __name__ == '__main__':
     conta1 = Conta(199249, 'ELIEZER ALVES', 250, 5000.00)
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     print("________________________________________________________")
 
     #Herança
-    contaCorrente = ContaCorrente(213121, "Eliezer Alves", 500.00, 1000.00)
+    contaCorrente = ContaCorrente(505050, "Eliezer Alves", 500.00, 1000.00)
     print(contaCorrente.getTitular())
     print(contaCorrente.getTaxaOperacao())
     contaCorrente.imprimirSaldo()
@@ -48,15 +48,12 @@ if __name__ == '__main__':
 
     print("________________________________________________________")
 
-    contaPoupanca = ContaPoupanca(213121, "Eliezer Alves", 1000.00, 10000.00)
+    contaPoupanca = ContaPoupanca(707070, "Eliezer Alves", 1000.00, 10000.00)
     print(contaPoupanca.getTitular())
     print(contaPoupanca.getTaxaRendimento())
     contaPoupanca.imprimirSaldo()
     contaPoupanca.creditarRendimento()
     contaPoupanca.imprimirSaldo()
-
-    print("________________________________________________________")
-
     # contaCorrente.imprimir()
     # contaPoupanca.imprimir()
 
@@ -64,5 +61,54 @@ if __name__ == '__main__':
 
     contas = [contaCorrente,contaPoupanca]
 
-    for c in contas:
-        c.imprimir()
+    # for c in contas:
+    #     c.imprimir()
+
+    print()
+    print("________________________________________________________")
+    print("____________________--AULA  7--_________________________")
+    print("________________________________________________________")
+    print()
+
+    listaContas = ListaContas(contas)
+    for c in listaContas:
+        print(c)
+
+    print()
+    print("________________________________________________________")
+    print("____________________--AULA  8--_________________________")
+    print("________________________________________________________")
+    print()
+
+    print('A quantidade de itens na lista é {}'.format(len(listaContas)))
+    for c in listaContas:
+        print(c)
+
+    del listaContas[1]
+
+    print("Lista de contas após a remoção do item 1")
+    for c in listaContas:
+        print(c)
+
+    listaContas.insert(contaPoupanca)
+    print("Lista de contas após a insersão")
+    for c in listaContas:
+        print(c)
+
+    contaPoupanca2 = ContaPoupanca(1111111, "Vladimir Putin", 9999999999999999999, 999999999999999999999)
+    listaContas[1] = contaPoupanca2
+    print("Lista de contas após a atualização")
+    for c in listaContas:
+        print(c)
+
+    print()
+    print("________________________________________________________")
+    print("____________________--AULA  9--_________________________")
+    print("________________________________________________________")
+    print()
+
+    contaPoupancaEspecial = ContaPoupancaEspecial(10101010, "Valeri Legasov", 15328372563, 1000000000000)
+
+    print(contaPoupancaEspecial)
+    contaPoupancaEspecial.imprimirSaldo()
+    contaPoupancaEspecial.imprimir()
