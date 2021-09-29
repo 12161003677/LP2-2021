@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session, flash
 
 app = Flask(__name__)
+app.secret_key = 'LP2'
 
 class Jogo:
     def __init__(self, nome, categoria, console):
@@ -15,6 +16,31 @@ jogo4 = Jogo('Sonic2', 'Aventura', 'Mega Drive')
 jogo5 = Jogo('Sonic3', 'Aventura', 'Mega Drive')
 
 jogos = [jogo1, jogo2, jogo3, jogo4, jogo5]
+
+@app.route("/login")
+def login():
+
+    return render_template('login.html')
+
+@app.route("/auth", methods=['POST'])
+def auth():
+
+    if 'mestra' == request.form['senha']:
+        session['user_logged'] = request.form['usuario']
+        flash(request.form['usuario'] + ' logou com sucesso!')
+        return redirect('/')
+    
+    else:
+        flash('Falha ao realizar login para ' + request.form['usuario'] + '!')
+        return redirect('/login')
+
+@app.route("/logout")
+def logout():
+
+    session['user_logged'] = None
+    flash('Sessão finalizada!')
+    
+    return redirect('/login')
 
 @app.route("/")
 def index():
@@ -38,7 +64,7 @@ def store():
     novoJogo = Jogo(nome, categoria, console)
     jogos.append(novoJogo)
 
-    return index()
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
