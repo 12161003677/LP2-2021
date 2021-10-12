@@ -1,19 +1,22 @@
 from flask import Flask, render_template, request, redirect, session, flash
 
+from dao import JogoDao
+from flask_mysqldb import MySQL
+from models import Jogo, Usuario
+
 app = Flask(__name__)
 app.secret_key = 'LP2'
 
-class Jogo:
-    def __init__(self, nome, categoria, console):
-        self._nome = nome
-        self._categoria = categoria
-        self._console = console
+app.config['MYSQL_HOST'] = '127.0.0.1'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'admin'
+app.config['MYSQL_DB'] = 'jogoteca'
+app.config['MYSQL_PORT'] = 3306
+db = MySQL(app)
 
-class Usuario:
-    def __init__(self, username, nome, password):
-        self._username = username
-        self._nome = nome
-        self._password = password
+jogoDao = JogoDao(db)
+
+
 
 jogo1 = Jogo('Tetrix', 'Puzzle', 'Super Nintendo')
 jogo2 = Jogo('Super Mario', 'Aventura', 'Nintendo 64')
@@ -90,7 +93,7 @@ def store():
     console = request.form['console']
 
     novoJogo = Jogo(nome, categoria, console)
-    jogos.append(novoJogo)
+    jogoDao.salvar(novoJogo)
 
     return redirect('/')
 

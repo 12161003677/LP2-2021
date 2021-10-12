@@ -1,4 +1,4 @@
-from aulas.conta import Conta, ContaCorrente, ContaPoupanca, ContaPoupancaEspecial, ListaContas
+from conta import Conta, ContaCorrente, ContaPoupanca, ContaPoupancaEspecial, ListaContas
 
 if __name__ == '__main__':
     conta1 = Conta(199249, 'ELIEZER ALVES', 250, 5000.00)
