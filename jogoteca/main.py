@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash
 
-from dao import JogoDao
+from dao import JogoDao, UsuarioDao
 from flask_mysqldb import MySQL
 from models import Jogo, Usuario
 
@@ -15,24 +15,8 @@ app.config['MYSQL_PORT'] = 3306
 db = MySQL(app)
 
 jogoDao = JogoDao(db)
+usuarioDao = UsuarioDao(db)
 
-
-
-jogo1 = Jogo('Tetrix', 'Puzzle', 'Super Nintendo')
-jogo2 = Jogo('Super Mario', 'Aventura', 'Nintendo 64')
-jogo3 = Jogo('Sonic', 'Aventura', 'Mega Drive')
-jogo4 = Jogo('Sonic2', 'Aventura', 'Mega Drive')
-jogo5 = Jogo('Sonic3', 'Aventura', 'Mega Drive')
-
-jogos = [jogo1, jogo2, jogo3, jogo4, jogo5]
-
-usuario1 = Usuario('eli', 'Eliezer Alves', 'admin')
-usuario2 = Usuario('admin', 'Administrador', 'admin')
-
-usuarios = {
-    usuario1._username: usuario1,
-    usuario2._username: usuario2,
-}
 
 def session_valid():
     if 'user_logged' not in session or session['user_logged'] == None:
@@ -47,15 +31,16 @@ def login():
 
 @app.route("/auth", methods=['POST'])
 def auth():
+    usuario = usuarioDao.buscaPorId(request.form['username'])
 
-    if request.form['username'] in usuarios:
-        if usuarios[request.form['username']]._password == request.form['password']:
+    if usuario:
+        if usuario._senha == request.form['senha']:
             session['user_logged'] = request.form['username']
             flash(request.form['username'] + ' logou com sucesso!')
             next_page = request.form['callback_url']
             return redirect("/{}".format(next_page))
     
-    flash('Falha ao realizar login para ' + request.form['username'] + '!')
+    flash('Falha ao realizar login para: ' + request.form['username'] + '!')
     return redirect('/login')
 
 @app.route("/logout")
@@ -72,6 +57,7 @@ def index():
         return redirect('/login?callback_url=')
     
     titulo = "Lista de Jogos"
+    jogos = jogoDao.listar()
     return render_template('lista.html', titulo = titulo, jogos = jogos)
 
 @app.route("/create")

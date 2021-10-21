@@ -6,8 +6,7 @@ class Jogo:
         self._console = console
 
 class Usuario:
-    def __init__(self, username, nome, password, id=None):
+    def __init__(self, nome, senha, id=None):
         self._id = id
-        self._username = username
         self._nome = nome
-        self._password = password
+        self._senha = senha
