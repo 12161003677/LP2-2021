@@ -83,6 +83,30 @@ def store():
 
     return redirect('/')
 
+@app.route("/edit/<int:id>")
+def edit(id):
+    if not session_valid():
+        return redirect('/login?callback_url=create')
+
+    titulo = "Editar Jogo"
+    jogo = jogoDao.buscaPorId(id)
+    return render_template('editar.html', titulo = titulo, jogo = jogo)
+
+@app.route("/update", methods=['POST'])
+def update():
+    if not session_valid():
+        return redirect('/login?callback_url=create')
+
+    id = request.form['id']
+    nome = request.form['nome']
+    categoria = request.form['categoria']
+    console = request.form['console']
+
+    jogo = Jogo(nome, categoria, console, id)
+    jogoDao.editar(jogo)
+
+    return redirect('/')
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
     
