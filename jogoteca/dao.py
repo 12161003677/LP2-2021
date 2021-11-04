@@ -3,6 +3,7 @@ from models import Jogo, Usuario
 SQL_DELETA_JOGO = 'delete from jogo where id=%s'
 SQL_CRIA_JOGO = 'insert into jogo(nome,categoria,console) values(%s,%s,%s)'
 SQL_ATUALIZA_JOGO = 'update jogo set nome=%s,categoria=%s,console=%s where id=%s'
+SQL_DELETA_JOGO = 'delete from jogo where id=%s'
 SQL_BUSCA_JOGO_POR_ID = 'select id, nome, categoria, console from jogo  where id=%s'
 SQL_BUSCA_JOGOS = 'select id, nome, categoria, console from jogo'
 
@@ -34,6 +35,11 @@ class JogoDao:
         
         self.__db.connection.commit()
         return jogo
+    
+    def deletar(self, id):
+        cursor = self.__db.connection.cursor()
+        cursor.execute(SQL_DELETA_JOGO, (str(id)))
+        return self.__db.connection.commit()
     
     def listar(self):
         cursor = self.__db.connection.cursor()

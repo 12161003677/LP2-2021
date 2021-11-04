@@ -107,6 +107,15 @@ def update():
 
     return redirect('/')
 
+@app.route("/delete/<int:id>")
+def delete(id):
+    if not session_valid():
+        return redirect('/login?callback_url=create')
+
+    jogoDao.deletar(id)
+
+    return redirect('/')
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
     
