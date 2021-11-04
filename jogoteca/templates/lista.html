@@ -1,5 +1,6 @@
 {% extends "template.html" %}
 {% block conteudo %}
+<a href="{{url_for('create')}}" class="btn btn-success my-4">Novo Jogo</a>
 <table class="table table-striped table-responsive table-bordered">
     <thead class="thead-default">
         <tr>
@@ -16,8 +17,8 @@
             <td>{{ jogo._nome }}</td>
             <td>{{ jogo._categoria }}</td>
             <td>{{ jogo._console }}</td>
-            <td><a href="{{ url_for('edit', id=jogo._id) }}">Editar</a></td>
-            <td><a href="{{ url_for('delete', id=jogo._id) }}">Excluir</a></td>
+            <td><a href="{{ url_for('edit', id=jogo._id) }}" class="btn btn-secondary">Editar</a></td>
+            <td><a href="{{ url_for('delete', id=jogo._id) }}" class="btn btn-danger">Excluir</a></td>
         </tr>
     {% endfor %}
     </tbody>
