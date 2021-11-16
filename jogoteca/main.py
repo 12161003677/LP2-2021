@@ -56,6 +56,14 @@ def index():
     if not session_valid():
         return redirect('/login?callback_url=')
     
+    titulo = "Index"
+    return render_template('index.html', titulo = titulo)
+
+@app.route("/game-list")
+def gameList():
+    if not session_valid():
+        return redirect('/login?callback_url=')
+    
     titulo = "Lista de Jogos"
     jogos = jogoDao.listar()
     return render_template('lista.html', titulo = titulo, jogos = jogos)
@@ -81,7 +89,7 @@ def store():
     novoJogo = Jogo(nome, categoria, console)
     jogoDao.salvar(novoJogo)
 
-    return redirect('/')
+    return redirect('/game-list')
 
 @app.route("/edit/<int:id>")
 def edit(id):
@@ -105,7 +113,7 @@ def update():
     jogo = Jogo(nome, categoria, console, id)
     jogoDao.editar(jogo)
 
-    return redirect('/')
+    return redirect('/game-list')
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -114,7 +122,7 @@ def delete(id):
 
     jogoDao.deletar(id)
 
-    return redirect('/')
+    return redirect('/game-list')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
