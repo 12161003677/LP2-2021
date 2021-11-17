@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<table class="table table-striped table-responsive table-bordered">
+    <thead class="thead-default">
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Senha</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario._id }}</td>
+            <td>{{ usuario._senha }}</td>
+            <td>{{ usuario._categoria }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

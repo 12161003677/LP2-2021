@@ -59,6 +59,16 @@ def index():
     titulo = "Index"
     return render_template('index.html', titulo = titulo)
 
+@app.route("/user-list")
+def userList():
+    if not session_valid():
+        return redirect('/login?callback_url=')
+    
+    titulo = "Lista de Usuários"
+    usuarios = usuarioDao.listar()
+    print(usuarios)
+    return render_template('users.html', titulo = titulo, usuarios = usuarios)
+
 @app.route("/game-list")
 def gameList():
     if not session_valid():
